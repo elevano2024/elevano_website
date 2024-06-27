@@ -6,6 +6,13 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-background-image: url("/noise.png") repeat,
+    radial-gradient(
+      38.73% 74.82% at 43.78% 79.52%,
+      rgba(116, 79, 221, 0.5) 1.27%,
+      rgba(76, 66, 217, 0) 100%
+    ),
+    linear-gradient(121.48deg, #24223f 41.04%, #4c42d9 91.52%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +20,13 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+    --primary-background-image: url("/noise.png") repeat,
+      radial-gradient(
+        38.73% 74.82% at 43.78% 79.52%,
+        rgba(116, 79, 221, 0.5) 1.27%,
+        rgba(76, 66, 217, 0) 100%
+      ),
+      linear-gradient(121.48deg, #24223f 41.04%, #4c42d9 91.52%);
   }
 }
 
@@ -30,4 +44,31 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Custom CSS */
+.heroBackground {
+  background: var(--primary-background-image);
+  background-size: contain;
+  z-index: 1;
+
+  /* background: radial-gradient(38.73% 74.82% at 43.78% 79.52%, rgba(116, 79, 221, 0.5) 1.27%, rgba(76, 66, 217, 0) 100%) warning: gradient uses a rotation that is not supported by CSS and may not behave as expected; */
+}
+
+.heroBackground::before {
+  content: "";
+  background: url("/logo-hover.svg") no-repeat;
+  background-size: cover;
+  width: 22%;
+  height: 65%;
+  position: absolute;
+  top: 25%;
+  right: 6%;
+  z-index: 10;
+}
+
+.footer {
+  background: var(--primary-background-image);
+  background-size: contain;
+  z-index: 1;
 }
