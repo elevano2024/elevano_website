@@ -32,7 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bakbak_one.variable} ${montserrat.variable}`}>
+      <body
+        className={`${bakbak_one.variable} ${montserrat.variable} font-montserrat`}
+      >
         <>
           {/* Landing page Hero Section */}
           <header className="heroBackground py-2">
@@ -40,7 +42,12 @@ export default function RootLayout({
             <div className="px-[150px] py-4 flex items-center justify-between">
               {/* Logo */}
               <div className="">
-                <Image src="/logo.svg" alt="logo" width="147" height="52" />
+                <Image
+                  src="/logo-white.svg"
+                  alt="logo"
+                  width="147"
+                  height="52"
+                />
               </div>
 
               {/* Nav List */}
@@ -86,14 +93,26 @@ export default function RootLayout({
           {children}
 
           {/* Footer */}
-          <footer className="footer py-16 px-96 flex flex-col justify-center items-center gap-[76px]">
-            <h6 className="text-white font-montserrat font-semibold text-5xl leading-[56px] text-center">
-              Have A Project In Mind? Let’s Get To Work With Us.
-            </h6>
+          <footer className="footer ">
+            <div className="py-16 px-96 flex flex-col justify-center items-center gap-[76px]">
+              <h6 className="text-white font-montserrat font-semibold text-5xl leading-[56px] text-center">
+                Have A Project In Mind? Let’s Get To Work With Us.
+              </h6>
 
-            <button className="w-2/6 py-3 px-4 border-white border-[1px] rounded-[4px]">
-              Contact Us
-            </button>
+              <button className="w-2/6 py-3 px-4 border-white border-[1px] rounded-[4px]">
+                Contact Us
+              </button>
+            </div>
+
+            <div className="bg-white h-36 flex justify-between items-center px-36 py-20">
+              {/* Logo */}
+              <div className="">
+                <Image src="/logo.svg" alt="logo" width="147" height="52" />
+              </div>
+              <div className="">
+                <p className="text-black text-base">© 2024 Elevano</p>
+              </div>
+            </div>
           </footer>
         </>
       </body>
