@@ -83,7 +83,7 @@ const ServiceSection = () => {
         {services.map((service, index) => (
           <button
             key={index}
-            className={`h-[112px] border-[1px] border-[#4C42D9] text-black rounded-lg py-6 px-10 flex justify-start items-center gap-2 ${
+            className={`h-[112px] border-[1px] border-[#4C42D9] text-black rounded-lg py-5 px-9 flex justify-start items-center gap-2 ${
               service.active ? "bg-[#4C42D9]" : ""
             }`}
             onClick={() => handleServiceClick(index)}
@@ -91,11 +91,11 @@ const ServiceSection = () => {
             <Image
               src={`${service.active ? "/orion-white.svg" : "/orion.svg"}`}
               alt="orion"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
             />
             <span
-              className={`text-left font-medium ${
+              className={`text-left font-medium text-lg leading-6 ${
                 service.active ? "text-white" : "text-black"
               }`}
             >
@@ -120,6 +120,7 @@ const ServiceSection = () => {
                 alt={`tool-${index}`}
                 width="44"
                 height="44"
+                className="w-[40px] h-[40px]"
               />
             ))
           ) : (
