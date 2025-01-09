@@ -5,7 +5,7 @@ import CountUp from "react-countup";
 
 const stats = [
   {
-    value: 150,
+    value: 20,
     label: "Projects Delivered",
     color: "#4F46E5",
     description: "Successfully completed projects across various industries",
@@ -26,7 +26,6 @@ const stats = [
     percentage: 85,
   },
 ];
-
 export default function StatsSection() {
   return (
     <div className="py-16 bg-gray-100">
@@ -83,11 +82,6 @@ export default function StatsSection() {
                     duration={2}
                     className="text-3xl font-bold text-gray-900"
                   />
-                  {stat.percentage && (
-                    <span className="text-sm text-gray-500">
-                      {stat.percentage}%
-                    </span>
-                  )}
                 </div>
               </div>
 
