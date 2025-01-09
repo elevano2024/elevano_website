@@ -58,11 +58,11 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <Link href="/portfolio" className="inline-block">
+              {/* <Link href="/portfolio" className="inline-block">
                 <button className="bg-white text-brand px-8 py-3 rounded-lg hover:bg-brand hover:text-white transition-all duration-300 shadow-lg hover:shadow-brand/30">
                   Explore Our Work
                 </button>
-              </Link>
+              </Link> */}
               <Link href="/contact" className="inline-block">
                 <button className="border border-white/30 text-white px-8 py-3 rounded-lg hover:bg-white/10 transition-all duration-300">
                   Get in Touch

@@ -88,7 +88,7 @@ export function ParticleCanvas({ interactionElementRef }: Props) {
     initParticles();
 
     const handleMouseMove = (e: MouseEvent) => {
-      const interactionElement = interactionElementRef.current;
+      const interactionElement = interactionElementRef?.current;
       if (!interactionElement) return;
 
       const rect = interactionElement.getBoundingClientRect();

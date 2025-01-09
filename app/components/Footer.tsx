@@ -38,7 +38,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">Connect</h3>
             <ul className="space-y-2 text-gray-400">
               <li>LinkedIn</li>
@@ -46,7 +46,7 @@ export function Footer() {
               <li>GitHub</li>
               <li>info@elevano.com</li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
