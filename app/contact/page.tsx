@@ -126,7 +126,7 @@ export default function Contact() {
     <div className="min-h-screen">
       {/* Hero Section with Particles */}
       <div className="relative h-[50vh] min-h-[500px] bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white">
-        <ParticleCanvas className="absolute inset-0" />
+        <ParticleCanvas />
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             <motion.h1
@@ -135,7 +135,7 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Let's Build Something Amazing Together
+              Let&apos;s Build Something Amazing Together
             </motion.h1>
             <motion.p
               className="text-xl text-gray-200 max-w-2xl"
@@ -143,8 +143,8 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Have a project in mind? We'd love to hear about it. Drop us a
-              message and we'll get back to you as soon as possible.
+              Have a project in mind? We&apos;d love to hear about it. Drop us a
+              message and we&apos;ll get back to you as soon as possible.
             </motion.p>
           </div>
         </div>
@@ -172,7 +172,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="name"
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
+                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-brand focus:ring-brand px-4 py-3"
                     value={formData.name}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
@@ -189,7 +189,7 @@ export default function Contact() {
                   <input
                     type="email"
                     id="email"
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
+                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-brand focus:ring-brand px-4 py-3"
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
@@ -206,7 +206,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="subject"
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
+                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-brand focus:ring-brand px-4 py-3"
                     value={formData.subject}
                     onChange={(e) =>
                       setFormData({ ...formData, subject: e.target.value })
@@ -223,7 +223,7 @@ export default function Contact() {
                   <textarea
                     id="message"
                     rows={4}
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
+                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
                     value={formData.message}
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })

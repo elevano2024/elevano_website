@@ -80,7 +80,7 @@ export function Navbar() {
               const isActive =
                 item.href === "/"
                   ? pathname === "/"
-                  : pathname.startsWith(item.href.split("#")[0]);
+                  : pathname?.startsWith(item.href.split("#")[0]);
 
               return (
                 <Link

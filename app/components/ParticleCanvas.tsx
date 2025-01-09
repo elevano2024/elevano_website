@@ -16,10 +16,10 @@ interface Particle {
 }
 
 interface Props {
-  interactionElementRef: React.RefObject<HTMLDivElement>;
+  interactionElementRef?: React.RefObject<HTMLDivElement>;
 }
 
-export function ParticleCanvas({ interactionElementRef }: Props) {
+export function ParticleCanvas({ interactionElementRef = undefined }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const particlesRef = useRef<Particle[]>([]);
