@@ -306,10 +306,11 @@ export function ServicesSection() {
             Our Services
           </h2>
           <p className="mt-4 text-xl text-gray-600">
-            Whether you need a stunning website, custom software solutions,
-            scalable cloud infrastructure, or strategic guidance for digital
-            solutions, we deliver tailored services to propel your business
-            forward.
+            From crafting visually stunning websites to delivering robust
+            software solutions and scalable cloud infrastructure, we provide
+            customized strategies to meet your unique business needs. Partner
+            with us to drive innovation, efficiency, and long-term growth in the
+            digital age.
           </p>
         </motion.div>
 

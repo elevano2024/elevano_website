@@ -16,10 +16,11 @@ export function AboutSection() {
               Who We Are
             </h2>
             <p className="text-xl text-gray-600 mb-6">
-              Elevano is a forward-thinking IT consulting firm dedicated to
-              helping businesses navigate the complex world of technology. With
-              years of experience and a passion for innovation, we deliver
-              solutions that drive real business value.
+              At Elevano, we believe technology should make life easier. Over
+              the years, we’ve become a powerhouse in software development,
+              helping businesses reimagine workflows with seamless web & mobile
+              Apps, scalable backends, and AI-driven solutions. We don’t just
+              create software—we craft tools that drive real business value.
             </p>
             <ul className="space-y-4">
               {[

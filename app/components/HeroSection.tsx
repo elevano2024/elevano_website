@@ -48,9 +48,10 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              Transforming ideas into powerful digital solutions. We craft
-              cutting-edge experiences that drive success in the modern tech
-              landscape.
+              Empowering businesses with AI-driven, scalable, and cutting-edge
+              digital solutions. At Elevano, we transform ideas into intelligent
+              systems that drive growth and innovation, ensuring your success in
+              a rapidly evolving tech landscape.
             </motion.p>
             <motion.div
               className="space-x-4"

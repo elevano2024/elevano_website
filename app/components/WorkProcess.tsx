@@ -381,13 +381,15 @@ export function WorkProcess() {
                 How we work
               </h2>
               <p className="text-xl text-gray-600 max-w-xl leading-relaxed">
-                At Elevano, we leverage the process to deliver exceptional IT
-                solutions. Beginning with discovery and defining clear
-                objectives, we move into development, where our expert team
-                crafts innovative solutions. Our commitment to quality
-                culminates in seamless delivery and ongoing support, ensuring
-                your business thrives with cutting-edge technology tailored to
-                your needs.
+                At Elevano, every solution starts with understanding your
+                vision. Through a thoughtful discovery process, we uncover your
+                unique challenges and define clear goals. From there, our expert
+                team transforms ideas into innovative, tailored IT solutions,
+                blending creativity with cutting-edge technology. The journey
+                doesn’t end at delivery—we provide seamless implementation and
+                ongoing support to ensure your success. With Elevano, it’s not
+                just about building software; it’s about building the future of
+                your business.
               </p>
             </motion.div>
           </div>
