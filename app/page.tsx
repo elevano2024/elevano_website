@@ -9,19 +9,17 @@ import { WorkProcess } from "./components/WorkProcess";
 
 export default function Home() {
   return (
-    <main>
-      <HeroSection />
-      {/* <ProjectShowcase /> */}
+    <>
       <Navbar />
-      <ParallaxBackground />
-      <ServicesSection />
-      {/* <TechStack /> */}
-      <AboutSection />
-      <StatsSection />
-      <WorkProcess />
-      {/* <TestimonialsSection /> */}
-      {/* <PortfolioShowcase /> */}
+      <main>
+        <HeroSection />
+        <ParallaxBackground />
+        <ServicesSection />
+        <AboutSection />
+        <StatsSection />
+        <WorkProcess />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

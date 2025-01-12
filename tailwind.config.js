@@ -26,6 +26,17 @@ module.exports = {
                     900: '#4c1d95',
                 },
             },
+            screens: {
+                'xs': '375px',
+                'sm': '640px',
+                'md': '768px',
+                'lg': '1024px',
+                'xl': '1280px',
+                '2xl': '1536px',
+            },
+            spacing: {
+                '128': '32rem',
+            },
         },
     },
     plugins: [],

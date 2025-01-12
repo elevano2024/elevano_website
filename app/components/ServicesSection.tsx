@@ -294,7 +294,7 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="relative py-20 bg-white w-full">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -305,7 +305,7 @@ export function ServicesSection() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
             Our Services
           </h2>
-          <p className="mt-4 text-xl text-gray-600">
+          <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
             From crafting visually stunning websites to delivering robust
             software solutions and scalable cloud infrastructure, we provide
             customized strategies to meet your unique business needs. Partner
@@ -314,7 +314,7 @@ export function ServicesSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
@@ -326,18 +326,15 @@ export function ServicesSection() {
                 scale: 1.02,
                 backgroundColor: "rgba(76, 66, 217, 0.02)",
               }}
-              className="flex items-start p-6 rounded-xl transition-colors cursor-pointer"
+              className="relative flex items-start p-6 rounded-xl transition-colors cursor-pointer bg-white"
             >
-              <motion.div
-                className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
+              <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                 <ServiceIcon type={service.icon} isActive={false} />
-              </motion.div>
-              <div className="ml-4">
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+              </div>
+              <div className="ml-4 flex-grow">
+                <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                  {service.title}
+                </h3>
                 <p className="text-gray-600">{service.description}</p>
               </div>
             </motion.div>

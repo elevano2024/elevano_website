@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     console.log("Received contact form submission:", data);
 
     // Basic validation
-    if (!data.name || !data.email || !data.subject || !data.message) {
+    if (!data.name || !data.email || !data.message) {
       console.log("Validation failed:", data);
       return NextResponse.json(
         { error: "All fields are required" },

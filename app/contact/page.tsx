@@ -8,7 +8,6 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
     message: "",
   });
 
@@ -18,12 +17,7 @@ export default function Contact() {
     e.preventDefault();
 
     // Validate form
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.subject ||
-      !formData.message
-    ) {
+    if (!formData.name || !formData.email || !formData.message) {
       toast.error("Please fill in all fields", {
         duration: 4000,
         icon: "⚠️",
@@ -91,7 +85,6 @@ export default function Contact() {
         setFormData({
           name: "",
           email: "",
-          subject: "",
           message: "",
         });
       } else {
@@ -125,12 +118,12 @@ export default function Contact() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Particles */}
-      <div className="relative h-[50vh] min-h-[500px] bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white">
+      <div className="relative h-[40vh] sm:h-[50vh] min-h-[400px] bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white">
         <ParticleCanvas />
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             <motion.h1
-              className="text-4xl md:text-5xl font-bold mb-4"
+              className="text-4xl md:text-5xl font-bold mb-4 pt-20 sm:pt-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -153,7 +146,7 @@ export default function Contact() {
       {/* Contact Form Section */}
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
             {/* Form Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -193,23 +186,6 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-brand focus:ring-brand px-4 py-3"
-                    value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
                     }
                   />
                 </div>

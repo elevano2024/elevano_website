@@ -99,8 +99,8 @@ function ProjectItem({ project, progress, index, total }: ProjectItemProps) {
       }}
       className="flex items-center justify-center"
     >
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4 py-12 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Text Content */}
           <motion.div style={{ y }} className="text-white z-10">
             <motion.h2 className="text-6xl font-bold mb-4">

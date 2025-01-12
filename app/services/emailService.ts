@@ -3,7 +3,6 @@ import { Resend } from "resend";
 interface EmailData {
   name: string;
   email: string;
-  subject: string;
   message: string;
 }
 
@@ -24,7 +23,6 @@ export const sendContactEmail = async (data: EmailData) => {
       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px;">
         <p><strong>Name:</strong> ${data.name}</p>
         <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Subject:</strong> ${data.subject}</p>
         <h3 style="color: #4C42D9;">Message:</h3>
         <p style="white-space: pre-wrap;">${data.message}</p>
       </div>
@@ -46,7 +44,6 @@ export const sendContactEmail = async (data: EmailData) => {
   //         <p>Thank you for reaching out to us. We have received your message and our team will review it shortly.</p>
   //         <p>Here's a copy of your message:</p>
   //         <div style="background-color: white; padding: 15px; border-radius: 4px; margin: 15px 0;">
-  //           <p><strong>Subject:</strong> ${data.subject}</p>
   //           <p><strong>Message:</strong></p>
   //           <p style="white-space: pre-wrap;">${data.message}</p>
   //         </div>
@@ -66,7 +63,7 @@ export const sendContactEmail = async (data: EmailData) => {
     const notificationResult = await resend.emails.send({
       from: "Eleveno Contact <onboarding@resend.dev>", // Important: Use verified domain
       to: "jigar.moradiya@elevano.io",
-      subject: `Contact Form: ${data.subject}`,
+      subject: `Contact Form: ${data.name}`,
       html: notificationTemplate,
       replyTo: data.email,
     });

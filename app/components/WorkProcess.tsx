@@ -285,116 +285,178 @@ export function WorkProcess() {
   const currentStep = steps[Math.min(activeStep, steps.length - 1)];
 
   return (
-    <div
-      ref={containerRef}
-      className={`h-screen bg-white overflow-hidden ${
-        !hasCompletedAllSteps ? "sticky top-0" : ""
-      }`}
-    >
-      <div className="container mx-auto px-4 h-full flex flex-col items-center justify-center">
-        <div className="grid grid-cols-2 h-full gap-12">
-          <div className="flex items-center justify-center">
-            <motion.div
-              className="relative w-[600px] h-[600px]"
-              style={{
-                opacity: isFullyVisible ? 1 : initialOpacity,
-                scale: isFullyVisible ? 1 : initialScale,
-              }}
-            >
-              <svg
-                className="absolute inset-0 w-full h-full -rotate-90"
-                viewBox="0 0 200 200"
-              >
-                <motion.circle
-                  cx="100"
-                  cy="100"
-                  r="90"
-                  fill="none"
-                  stroke="#4C42D9"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeDasharray="565.48"
-                  initial={{ strokeDashoffset: 565.48 }}
-                  animate={{
-                    strokeDashoffset:
-                      activeStep === 0
-                        ? 565.48 * 0.75 // 25% filled for first step
-                        : 565.48 - (activeStep + 1) * (565.48 / 4),
-                  }}
-                  transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
-                />
-              </svg>
-
+    <>
+      {/* Desktop Version - with sticky behavior */}
+      <div
+        ref={containerRef}
+        className={`hidden md:block h-screen bg-white overflow-hidden ${
+          !hasCompletedAllSteps ? "sticky top-0" : ""
+        }`}
+      >
+        <div className="container mx-auto px-4 h-full flex items-center">
+          <div className="grid grid-cols-2 h-full gap-12">
+            <div className="flex items-center justify-center">
               <motion.div
-                className="absolute inset-0 flex flex-col items-center justify-center text-center p-12"
-                style={{ y: isFullyVisible ? 0 : initialY }}
+                className="relative w-[600px] h-[600px]"
+                style={{
+                  opacity: isFullyVisible ? 1 : initialOpacity,
+                  scale: isFullyVisible ? 1 : initialScale,
+                }}
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeStep}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-primary-600"
-                  >
-                    <StepIcon stepId={currentStep.id} />
-                  </motion.div>
-                </AnimatePresence>
+                <svg
+                  className="absolute inset-0 w-full h-full -rotate-90"
+                  viewBox="0 0 200 200"
+                >
+                  <motion.circle
+                    cx="100"
+                    cy="100"
+                    r="90"
+                    fill="none"
+                    stroke="#4C42D9"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeDasharray="565.48"
+                    initial={{ strokeDashoffset: 565.48 }}
+                    animate={{
+                      strokeDashoffset:
+                        activeStep === 0
+                          ? 565.48 * 0.75 // 25% filled for first step
+                          : 565.48 - (activeStep + 1) * (565.48 / 4),
+                    }}
+                    transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
+                  />
+                </svg>
 
-                <AnimatePresence mode="wait">
-                  <motion.h3
-                    key={`title-${activeStep}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-3xl font-bold text-gray-900 mt-4 mb-3"
-                  >
-                    {currentStep.title}
-                  </motion.h3>
-                </AnimatePresence>
+                <motion.div
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-12"
+                  style={{ y: isFullyVisible ? 0 : initialY }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeStep}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-primary-600"
+                    >
+                      <StepIcon stepId={currentStep.id} />
+                    </motion.div>
+                  </AnimatePresence>
 
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={`desc-${activeStep}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-gray-600 max-w-sm"
-                  >
-                    {currentStep.description}
-                  </motion.p>
-                </AnimatePresence>
+                  <AnimatePresence mode="wait">
+                    <motion.h3
+                      key={`title-${activeStep}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.6, delay: 0.1 }}
+                      className="text-3xl font-bold text-gray-900 mt-4 mb-3"
+                    >
+                      {currentStep.title}
+                    </motion.h3>
+                  </AnimatePresence>
+
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={`desc-${activeStep}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                      className="text-gray-600 max-w-sm"
+                    >
+                      {currentStep.description}
+                    </motion.p>
+                  </AnimatePresence>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          </div>
+            </div>
 
-          <div className="flex flex-col justify-center">
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-6xl font-bold mb-8 text-gray-900">
-                How we work
-              </h2>
-              <p className="text-xl text-gray-600 max-w-xl leading-relaxed">
-                At Elevano, every solution starts with understanding your
-                vision. Through a thoughtful discovery process, we uncover your
-                unique challenges and define clear goals. From there, our expert
-                team transforms ideas into innovative, tailored IT solutions,
-                blending creativity with cutting-edge technology. The journey
-                doesn’t end at delivery—we provide seamless implementation and
-                ongoing support to ensure your success. With Elevano, it’s not
-                just about building software; it’s about building the future of
-                your business.
-              </p>
-            </motion.div>
+            <div className="flex flex-col justify-center">
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h2 className="text-6xl font-bold mb-8 text-gray-900">
+                  How we work
+                </h2>
+                <p className="text-xl text-gray-600 max-w-xl leading-relaxed">
+                  At Elevano, every solution starts with understanding your
+                  vision. Through a thoughtful discovery process, we uncover
+                  your unique challenges and define clear goals. From there, our
+                  expert team transforms ideas into innovative, tailored IT
+                  solutions, blending creativity with cutting-edge technology.
+                  The journey doesn’t end at delivery—we provide seamless
+                  implementation and ongoing support to ensure your success.
+                  With Elevano, it’s not just about building software; it’s
+                  about building the future of your business.
+                </p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Mobile Version - no sticky behavior */}
+      <div className="md:hidden bg-white">
+        <div className="container mx-auto px-4 py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">
+              How we work
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              We follow a proven process to deliver exceptional results for your
+              business.
+            </p>
+          </motion.div>
+
+          <div className="space-y-8">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                    <span className="text-primary font-bold">{step.id}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {step.title}
+                  </h3>
+                </div>
+                <p className="text-gray-600 ml-14">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-gray-600 mb-6">Ready to start your project?</p>
+            <a
+              href="/contact"
+              className="inline-block px-6 py-3 bg-primary text-white rounded-lg font-medium bg-primary-600 transition-colors"
+            >
+              Get Started
+            </a>
+          </motion.div>
+        </div>
+      </div>
+    </>
   );
 }
