@@ -12,9 +12,9 @@ const getRandomRotation = () => {
 const services = [
   {
     category: "What We Do",
-    title: "Full-Stack Development & Technical Innovation",
+    title: "Full-Stack Development & AI Innovation",
     description:
-      "Leveraging cutting-edge frameworks and modern tech stacks to deliver scalable solutions. From intuitive frontends to robust cloud infrastructure, we architect end-to-end systems that drive digital transformation.",
+      "Leveraging cutting-edge frameworks and modern tech stacks to deliver scalable solutions. From intuitive frontends to robust cloud infrastructure, we architect end-to-end systems that drive digital transformation. Our expertise extends to AI integration, enabling intelligent features and automation that give your applications a competitive edge.",
     technologies: [
       { name: "React/Next.js", icon: "/tech/react.svg", color: "#61DAFB" },
       { name: "Node.js", icon: "/tech/node.svg", color: "#339933" },
@@ -48,12 +48,18 @@ const serviceCards = [
     title: "Product Design & UX",
     description: "Creating intuitive digital experiences",
     features: [
-      { name: "Design Systems", tech: "Component Libraries, Design Tokens" },
+      {
+        name: "Design Systems",
+        tools: "Figma, Adobe XD, Sketch, ...",
+      },
       {
         name: "Interactive Prototypes",
-        tech: "Micro-interactions, Motion Design",
+        tools: "Framer, Principle, ProtoPie, ...",
       },
-      { name: "User Research", tech: "Analytics Integration, A/B Testing" },
+      {
+        name: "User Research",
+        tools: "Hotjar, Mixpanel, Optimizely, ...",
+      },
     ],
     ...cardPositions[0],
     bgColor: "from-blue-50 to-indigo-50",
@@ -65,10 +71,16 @@ const serviceCards = [
     features: [
       {
         name: "Frontend Architecture",
-        tech: "Server Components, Edge Runtime",
+        tools: "React, Vue.js, Next.js, Nuxt, ...",
       },
-      { name: "State Management", tech: "Server Actions, Real-time Updates" },
-      { name: "Performance", tech: "SSR, ISR, Dynamic Imports" },
+      {
+        name: "State Management",
+        tools: "Redux, Zustand, TanStack Query, ...",
+      },
+      {
+        name: "Performance",
+        tools: "Webpack, Vite, Turbopack, ...",
+      },
     ],
     ...cardPositions[1],
     bgColor: "from-emerald-50 to-teal-50",
@@ -78,9 +90,18 @@ const serviceCards = [
     title: "Cloud & DevOps",
     description: "Scaling your infrastructure for global reach",
     features: [
-      { name: "Infrastructure", tech: "IaC, Multi-region Deployment" },
-      { name: "Containerization", tech: "Microservices, Service Mesh" },
-      { name: "CI/CD", tech: "GitOps, Automated Pipelines" },
+      {
+        name: "Infrastructure",
+        tools: "Terraform, AWS CDK, Pulumi, ...",
+      },
+      {
+        name: "Containerization",
+        tools: "Docker, Kubernetes, Istio, ...",
+      },
+      {
+        name: "CI/CD",
+        tools: "GitHub Actions, Jenkins, ArgoCD, ...",
+      },
     ],
     ...cardPositions[2],
     bgColor: "from-violet-50 to-purple-50",
@@ -90,9 +111,18 @@ const serviceCards = [
     title: "Digital Innovation",
     description: "Revolutionizing business through technology",
     features: [
-      { name: "System Design", tech: "Event-Driven, Domain-Driven" },
-      { name: "API Architecture", tech: "REST, GraphQL, WebSockets" },
-      { name: "Data Strategy", tech: "Data Mesh, Event Streaming" },
+      {
+        name: "System Design",
+        tools: "Apache Kafka, RabbitMQ, NATS, ...",
+      },
+      {
+        name: "API Architecture",
+        tools: "tRPC, Apollo, Hasura, ...",
+      },
+      {
+        name: "Data Strategy",
+        tools: "Databricks, Snowflake, dbt, ...",
+      },
     ],
     ...cardPositions[3],
     bgColor: "from-orange-50 to-amber-50",
@@ -102,9 +132,18 @@ const serviceCards = [
     title: "AI & Machine Learning",
     description: "Harnessing AI to drive business innovation",
     features: [
-      { name: "LLM Integration", tech: "RAG, Embeddings, Fine-tuning" },
-      { name: "MLOps", tech: "Model Serving, Feature Stores" },
-      { name: "Vector Search", tech: "Semantic Search, Neural DBs" },
+      {
+        name: "LLM Integration",
+        tools: "LangChain, LlamaIndex, OpenAI, ...",
+      },
+      {
+        name: "MLOps",
+        tools: "MLflow, Kubeflow, Weights & Biases, ...",
+      },
+      {
+        name: "Vector Search",
+        tools: "Pinecone, Weaviate, Milvus, ...",
+      },
     ],
     ...cardPositions[4],
     bgColor: "from-pink-50 to-rose-50",
@@ -114,9 +153,18 @@ const serviceCards = [
     title: "Backend & APIs",
     description: "Building robust foundations for your applications",
     features: [
-      { name: "Serverless", tech: "Edge Functions, BaaS" },
-      { name: "Data Engineering", tech: "OLAP, Stream Processing" },
-      { name: "Security", tech: "Zero Trust, IAM, WAF" },
+      {
+        name: "Serverless",
+        tools: "AWS Lambda, Vercel Edge, Firebase, ...",
+      },
+      {
+        name: "Data Engineering",
+        tools: "Apache Spark, Flink, BigQuery, ...",
+      },
+      {
+        name: "Security",
+        tools: "Auth0, Okta, Cloudflare, ...",
+      },
     ],
     ...cardPositions[5],
     bgColor: "from-cyan-50 to-sky-50",
@@ -302,8 +350,8 @@ export function ServicesNew() {
                         </svg>
                         <div>
                           <span className="font-semibold">{feature.name}</span>
-                          <span className="text-[10px] text-gray-500 block mt-0.5 opacity-90">
-                            {feature.tech}
+                          <span className="text-[10px] text-primary block mt-0.5 opacity-90">
+                            {feature.tools}
                           </span>
                         </div>
                       </li>
