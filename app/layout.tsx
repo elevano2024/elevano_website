@@ -27,6 +27,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
           rel="stylesheet"
         />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className={inter.className}>
         <Navbar />
