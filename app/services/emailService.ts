@@ -62,7 +62,7 @@ export const sendContactEmail = async (data: EmailData) => {
     console.log("Sending notification email...");
     const notificationResult = await resend.emails.send({
       from: "Eleveno Contact <onboarding@resend.dev>", // Important: Use verified domain
-      to: "jigar.moradiya@elevano.io",
+      to: "ravi.singh@elevano.io",
       subject: `Contact Form: ${data.name}`,
       html: notificationTemplate,
       replyTo: data.email,
