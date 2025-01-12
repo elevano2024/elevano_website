@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -14,7 +15,7 @@ export function Footer() {
               className="h-8 w-auto mb-4"
             />
             <p className="text-gray-400 text-sm md:text-base">
-              Transforming businesses through innovative technology solutions.
+              Building Digital Excellence Through Innovation{" "}
             </p>
           </div>
 
@@ -39,17 +40,34 @@ export function Footer() {
           <div className="mb-6 sm:mb-0">
             <h3 className="text-lg font-semibold mb-4">Company</h3>
             <ul className="space-y-2 text-sm md:text-base text-gray-400">
-              <li className="hover:text-white transition-colors cursor-pointer">
-                About Us
+              <li>
+                <Link href="/" className="hover:text-white transition-colors">
+                  Home
+                </Link>
               </li>
-              <li className="hover:text-white transition-colors cursor-pointer">
-                Careers
+              <li>
+                <Link
+                  href="/#services"
+                  className="hover:text-white transition-colors"
+                >
+                  Services
+                </Link>
               </li>
-              <li className="hover:text-white transition-colors cursor-pointer">
-                Blog
+              <li>
+                <Link
+                  href="/#about"
+                  className="hover:text-white transition-colors"
+                >
+                  About
+                </Link>
               </li>
-              <li className="hover:text-white transition-colors cursor-pointer">
-                Contact
+              <li>
+                <Link
+                  href="/contact"
+                  className="hover:text-white transition-colors"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
