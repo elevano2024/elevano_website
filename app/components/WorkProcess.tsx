@@ -1,10 +1,5 @@
 "use client";
-import {
-  AnimatePresence,
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const StepIcon = ({ stepId }: { stepId: number }) => {
@@ -218,91 +213,54 @@ const steps = [
 ];
 
 export function WorkProcess() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
-  const [isFullyVisible, setIsFullyVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [hasCompletedAllSteps, setHasCompletedAllSteps] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const currentStep = steps[activeStep];
 
-  const initialOpacity = 100;
-  const initialScale = 1;
-  const initialY = 50;
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "center center"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [100, 0]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio >= 0.95) {
-          setIsFullyVisible(true);
-        } else {
-          setIsFullyVisible(false);
-        }
-      },
-      { threshold: [0, 0.95, 1] }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
+  // Handle scroll navigation
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (!isFullyVisible) return;
+      if (isAnimating) return;
 
-      if (!hasCompletedAllSteps && e.deltaY > 0) {
+      if (e.deltaY > 0 && activeStep < steps.length - 1) {
         e.preventDefault();
-
-        if (!isAnimating && activeStep < steps.length - 1) {
-          setIsAnimating(true);
-          setActiveStep((prev) => prev + 1);
-          setTimeout(() => setIsAnimating(false), 800);
-        }
+        setIsAnimating(true);
+        setActiveStep((prev) => prev + 1);
+        setTimeout(() => setIsAnimating(false), 1000);
+      } else if (e.deltaY < 0 && activeStep > 0) {
+        e.preventDefault();
+        setIsAnimating(true);
+        setActiveStep((prev) => prev - 1);
+        setTimeout(() => setIsAnimating(false), 1000);
       }
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, [isFullyVisible, hasCompletedAllSteps, activeStep, isAnimating]);
-
-  useEffect(() => {
-    if (activeStep === steps.length - 1) {
-      setTimeout(() => {
-        setHasCompletedAllSteps(true);
-      }, 1000);
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("wheel", handleWheel, { passive: false });
     }
-  }, [activeStep]);
 
-  const currentStep = steps[Math.min(activeStep, steps.length - 1)];
+    return () => {
+      if (container) {
+        container.removeEventListener("wheel", handleWheel);
+      }
+    };
+  }, [activeStep, isAnimating]);
 
   return (
     <>
-      {/* Desktop Version - with sticky behavior */}
+      {/* Desktop Version */}
       <div
         ref={containerRef}
-        className={`hidden md:block h-screen bg-white overflow-hidden ${
-          !hasCompletedAllSteps ? "sticky top-0" : ""
-        }`}
+        className="hidden md:block relative h-screen bg-white overflow-hidden"
       >
-        <div className="container mx-auto px-4 h-full flex items-center">
+        <div className="container mx-auto h-full">
           <div className="grid grid-cols-2 h-full gap-12">
+            {/* Left side - Animation and Title */}
             <div className="flex items-center justify-center">
-              <motion.div
-                className="relative w-[600px] h-[600px]"
-                style={{
-                  opacity: isFullyVisible ? 1 : initialOpacity,
-                  scale: isFullyVisible ? 1 : initialScale,
-                }}
-              >
+              <motion.div className="relative w-[600px] h-[600px]">
+                {/* Progress Ring */}
                 <svg
                   className="absolute inset-0 w-full h-full -rotate-90"
                   viewBox="0 0 200 200"
@@ -319,25 +277,21 @@ export function WorkProcess() {
                     initial={{ strokeDashoffset: 565.48 }}
                     animate={{
                       strokeDashoffset:
-                        activeStep === 0
-                          ? 565.48 * 0.75 // 25% filled for first step
-                          : 565.48 - (activeStep + 1) * (565.48 / 4),
+                        565.48 - (activeStep + 1) * (565.48 / steps.length),
                     }}
                     transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
                   />
                 </svg>
 
-                <motion.div
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-12"
-                  style={{ y: isFullyVisible ? 0 : initialY }}
-                >
+                {/* Content inside ring */}
+                <motion.div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeStep}
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.5 }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ duration: 0.2 }}
                       className="text-primary-600"
                     >
                       <StepIcon stepId={currentStep.id} />
@@ -350,7 +304,7 @@ export function WorkProcess() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.6, delay: 0.1 }}
+                      transition={{ duration: 0.2, delay: 0.02 }}
                       className="text-3xl font-bold text-gray-900 mt-4 mb-3"
                     >
                       {currentStep.title}
@@ -363,7 +317,7 @@ export function WorkProcess() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
+                      transition={{ duration: 0.2, delay: 0.04 }}
                       className="text-gray-600 max-w-sm"
                     >
                       {currentStep.description}
@@ -373,6 +327,7 @@ export function WorkProcess() {
               </motion.div>
             </div>
 
+            {/* Right side - Text Content */}
             <div className="flex flex-col justify-center">
               <motion.div
                 initial={{ opacity: 0, x: 40 }}
@@ -388,18 +343,36 @@ export function WorkProcess() {
                   your unique challenges and define clear goals. From there, our
                   expert team transforms ideas into innovative, tailored IT
                   solutions, blending creativity with cutting-edge technology.
-                  The journey doesn’t end at delivery—we provide seamless
-                  implementation and ongoing support to ensure your success.
-                  With Elevano, it’s not just about building software; it’s
-                  about building the future of your business.
                 </p>
               </motion.div>
             </div>
           </div>
+
+          {/* Navigation Dots */}
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4">
+            {steps.map((step, index) => (
+              <button
+                key={step.id}
+                onClick={() => {
+                  if (!isAnimating) {
+                    setIsAnimating(true);
+                    setActiveStep(index);
+                    setTimeout(() => setIsAnimating(false), 1000);
+                  }
+                }}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  activeStep === index
+                    ? "bg-primary-600 scale-125"
+                    : "bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to step ${step.title}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Mobile Version - no sticky behavior */}
+      {/* Mobile Version - Keep existing mobile version */}
       <div className="md:hidden bg-white">
         <div className="container mx-auto px-4 py-20">
           <motion.div
