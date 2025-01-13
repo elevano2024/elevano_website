@@ -1,6 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const StepIcon = ({ stepId }: { stepId: number }) => {
   switch (stepId) {
@@ -216,68 +216,181 @@ export function WorkProcess() {
   const [activeStep, setActiveStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [lastScrollTime, setLastScrollTime] = useState(0);
+  const [hasVisitedAll, setHasVisitedAll] = useState(false);
+  const [canScrollUp, setCanScrollUp] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const wheelHandlerRef = useRef<((e: WheelEvent) => void) | null>(null);
   const currentStep = steps[activeStep];
+  const [visitedSteps, setVisitedSteps] = useState(new Set([0]));
 
-  // Function to handle step changes
-  const changeStep = (direction: "next" | "prev") => {
+  // Mobile-specific states
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [lastTouchTime, setLastTouchTime] = useState(0);
+  const [mobileHasVisitedAll, setMobileHasVisitedAll] = useState(false);
+  const [mobileCanScrollUp, setMobileCanScrollUp] = useState(false);
+  const [mobileVisitedSteps, setMobileVisitedSteps] = useState(new Set([0]));
+
+  // Enhanced touch handlers with fixed swipe direction logic
+  const handleTouchStart = (e: React.TouchEvent) => {
     if (isAnimating) return;
-
-    setIsAnimating(true);
-    if (direction === "next" && activeStep < steps.length - 1) {
-      setActiveStep((prev) => prev + 1);
-    } else if (direction === "prev" && activeStep > 0) {
-      setActiveStep((prev) => prev - 1);
-    }
-    setTimeout(() => setIsAnimating(false), 300); // Reduced timeout
+    setTouchStart(e.targetTouches[0].clientY);
+    setTouchEnd(e.targetTouches[0].clientY);
   };
 
-  // Touch handling for mobile
-  const handleTouch = (e: TouchEvent) => {
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isAnimating) return;
+    e.preventDefault();
+
+    const currentTouch = e.targetTouches[0].clientY;
+    setTouchEnd(currentTouch);
+
+    if (touchStart) {
+      const currentDistance = currentTouch - touchStart;
+      const element = e.currentTarget as HTMLDivElement;
+
+      const maxTransform = 50;
+      const transform = Math.max(
+        Math.min(currentDistance, maxTransform),
+        -maxTransform
+      );
+      element.style.transform = `translateY(${transform}px)`;
+      element.style.transition = "transform 0.1s ease-out";
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart || !touchEnd || isAnimating) return;
+
+    const element = e.currentTarget as HTMLDivElement;
+    element.style.transform = "translateY(0)";
+    element.style.transition = "transform 0.3s ease-out";
+
     const currentTime = Date.now();
-    const timeSinceLastScroll = currentTime - lastScrollTime;
+    const timeSinceLastTouch = currentTime - lastTouchTime;
 
-    // Throttle scroll events
-    if (timeSinceLastScroll < 300) return; // Adjust this value as needed
+    if (timeSinceLastTouch < 500) return;
 
-    const deltaY = e.touches[0].clientY - (e as any).startTouchY;
+    const distance = touchEnd - touchStart;
+    const minSwipeDistance = 50;
 
-    if (Math.abs(deltaY) > 30) {
-      // Reduced threshold
-      if (deltaY > 0) {
-        changeStep("prev");
+    if (Math.abs(distance) >= minSwipeDistance) {
+      setIsAnimating(true);
+
+      if (distance < 0) {
+        // Swipe Up (moving finger up) - Go to next step
+        if (activeStep < steps.length - 1) {
+          setActiveStep((prev) => prev + 1);
+          setMobileVisitedSteps(
+            (prev) => new Set([...Array.from(prev), activeStep + 1])
+          );
+        } else if (mobileVisitedSteps.size === steps.length) {
+          setMobileHasVisitedAll(true);
+        }
       } else {
-        changeStep("next");
+        // Swipe Down (moving finger down) - Go to previous step
+        if (activeStep > 0) {
+          setActiveStep((prev) => prev - 1);
+        } else {
+          setMobileCanScrollUp(true);
+        }
       }
-      setLastScrollTime(currentTime);
+
+      setLastTouchTime(currentTime);
+      setTimeout(() => {
+        setIsAnimating(false);
+        element.style.transform = "translateY(0)";
+      }, 500);
     }
+
+    setTouchStart(null);
+    setTouchEnd(null);
   };
+
+  // Reset mobile states when component is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setMobileHasVisitedAll(false);
+            setMobileCanScrollUp(false);
+            setMobileVisitedSteps(new Set([0]));
+            setLastTouchTime(0);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const currentRef = mobileContainerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  // Update mobile hasVisitedAll when all steps are visited
+  useEffect(() => {
+    if (mobileVisitedSteps.size === steps.length) {
+      setMobileHasVisitedAll(true);
+    }
+  }, [mobileVisitedSteps]);
+
+  // Handle scroll navigation
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isAnimating) return;
+
+      if (e.deltaY > 0 && activeStep < steps.length - 1) {
+        e.preventDefault();
+        setIsAnimating(true);
+        setActiveStep((prev) => prev + 1);
+        setTimeout(() => setIsAnimating(false), 1000);
+      } else if (e.deltaY < 0 && activeStep > 0) {
+        e.preventDefault();
+        setIsAnimating(true);
+        setActiveStep((prev) => prev - 1);
+        setTimeout(() => setIsAnimating(false), 1000);
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("wheel", handleWheel, { passive: false });
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("wheel", handleWheel);
+      }
+    };
+  }, [activeStep, isAnimating]);
 
   return (
     <>
       {/* Mobile Version */}
       <div className="md:hidden bg-white min-h-screen relative flex items-center">
         <div
-          className="container mx-auto px-4 w-full"
+          className="container mx-auto px-4 w-full transition-transform"
+          style={{ touchAction: "none" }}
           onTouchStart={(e) => {
-            (e as any).startTouchY = e.touches[0].clientY;
-
-            const handleTouchMove = (e: TouchEvent) => {
-              e.preventDefault();
-              handleTouch(e);
-            };
-
-            document.addEventListener("touchmove", handleTouchMove, {
-              passive: false,
-            });
-
-            document.addEventListener(
-              "touchend",
-              () => {
-                document.removeEventListener("touchmove", handleTouchMove);
-              },
-              { once: true }
-            );
+            if (mobileHasVisitedAll || mobileCanScrollUp) return;
+            handleTouchStart(e);
+          }}
+          onTouchMove={(e) => {
+            if (mobileHasVisitedAll || mobileCanScrollUp) return;
+            handleTouchMove(e);
+          }}
+          onTouchEnd={(e) => {
+            if (mobileHasVisitedAll || mobileCanScrollUp) return;
+            handleTouchEnd(e);
           }}
         >
           <motion.div

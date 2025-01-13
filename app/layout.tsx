@@ -12,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://elevano.com"),
   title: {
     default: "Elevano | Digital Innovation & Technology Solutions",
     template: "%s | Elevano",
@@ -38,6 +39,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
   openGraph: {
     title: "Elevano | Digital Innovation & Technology Solutions",
     description: "Transform your business with cutting-edge digital solutions.",
@@ -45,11 +49,20 @@ export const metadata: Metadata = {
     siteName: "Elevano",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/logo-white.svg",
+        width: 1200,
+        height: 630,
+        alt: "Elevano - Digital Innovation & Technology Solutions",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Elevano | Digital Innovation & Technology Solutions",
     description: "Transform your business with cutting-edge digital solutions.",
+    images: ["/logo-white.svg"],
   },
   alternates: {
     canonical: "https://elevano.com",
