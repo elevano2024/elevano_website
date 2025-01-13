@@ -1,6 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const StepIcon = ({ stepId }: { stepId: number }) => {
   switch (stepId) {
@@ -215,41 +215,180 @@ const steps = [
 export function WorkProcess() {
   const [activeStep, setActiveStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [lastScrollTime, setLastScrollTime] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const currentStep = steps[activeStep];
 
-  // Handle scroll navigation
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (isAnimating) return;
+  // Function to handle step changes
+  const changeStep = (direction: "next" | "prev") => {
+    if (isAnimating) return;
 
-      if (e.deltaY > 0 && activeStep < steps.length - 1) {
-        e.preventDefault();
-        setIsAnimating(true);
-        setActiveStep((prev) => prev + 1);
-        setTimeout(() => setIsAnimating(false), 1000);
-      } else if (e.deltaY < 0 && activeStep > 0) {
-        e.preventDefault();
-        setIsAnimating(true);
-        setActiveStep((prev) => prev - 1);
-        setTimeout(() => setIsAnimating(false), 1000);
-      }
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("wheel", handleWheel, { passive: false });
+    setIsAnimating(true);
+    if (direction === "next" && activeStep < steps.length - 1) {
+      setActiveStep((prev) => prev + 1);
+    } else if (direction === "prev" && activeStep > 0) {
+      setActiveStep((prev) => prev - 1);
     }
+    setTimeout(() => setIsAnimating(false), 300); // Reduced timeout
+  };
 
-    return () => {
-      if (container) {
-        container.removeEventListener("wheel", handleWheel);
+  // Touch handling for mobile
+  const handleTouch = (e: TouchEvent) => {
+    const currentTime = Date.now();
+    const timeSinceLastScroll = currentTime - lastScrollTime;
+
+    // Throttle scroll events
+    if (timeSinceLastScroll < 300) return; // Adjust this value as needed
+
+    const deltaY = e.touches[0].clientY - (e as any).startTouchY;
+
+    if (Math.abs(deltaY) > 30) {
+      // Reduced threshold
+      if (deltaY > 0) {
+        changeStep("prev");
+      } else {
+        changeStep("next");
       }
-    };
-  }, [activeStep, isAnimating]);
+      setLastScrollTime(currentTime);
+    }
+  };
 
   return (
     <>
+      {/* Mobile Version */}
+      <div className="md:hidden bg-white min-h-screen relative flex items-center">
+        <div
+          className="container mx-auto px-4 w-full"
+          onTouchStart={(e) => {
+            (e as any).startTouchY = e.touches[0].clientY;
+
+            const handleTouchMove = (e: TouchEvent) => {
+              e.preventDefault();
+              handleTouch(e);
+            };
+
+            document.addEventListener("touchmove", handleTouchMove, {
+              passive: false,
+            });
+
+            document.addEventListener(
+              "touchend",
+              () => {
+                document.removeEventListener("touchmove", handleTouchMove);
+              },
+              { once: true }
+            );
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-3xl font-bold text-gray-900">How we work</h2>
+            <p className="text-gray-600 mt-2">
+              We follow a proven process to deliver exceptional results for your
+              business.
+            </p>
+          </motion.div>
+
+          <div className="relative flex flex-col items-center justify-center">
+            {/* Progress Ring */}
+            <div className="relative w-[300px] h-[300px] mx-auto">
+              <svg
+                className="absolute inset-0 w-full h-full -rotate-90"
+                viewBox="0 0 200 200"
+              >
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="#4C42D9"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeDasharray="565.48"
+                  initial={{ strokeDashoffset: 565.48 }}
+                  animate={{
+                    strokeDashoffset:
+                      565.48 - (activeStep + 1) * (565.48 / steps.length),
+                  }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                />
+              </svg>
+
+              {/* Content inside ring with faster transitions */}
+              <motion.div
+                className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
+                key={`content-${activeStep}`}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`icon-${activeStep}`}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-primary-600"
+                  >
+                    <StepIcon stepId={currentStep.id} />
+                  </motion.div>
+                </AnimatePresence>
+
+                <AnimatePresence mode="wait">
+                  <motion.h3
+                    key={`title-${activeStep}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-2xl font-bold text-gray-900 mt-4 mb-2"
+                  >
+                    {currentStep.title}
+                  </motion.h3>
+                </AnimatePresence>
+
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`desc-${activeStep}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-gray-600 text-sm"
+                  >
+                    {currentStep.description}
+                  </motion.p>
+                </AnimatePresence>
+              </motion.div>
+            </div>
+
+            {/* Step Indicators */}
+            <div className="flex justify-center gap-3 mt-8">
+              {steps.map((step, index) => (
+                <button
+                  key={step.id}
+                  onClick={() => {
+                    if (!isAnimating) {
+                      setIsAnimating(true);
+                      setActiveStep(index);
+                      setTimeout(() => setIsAnimating(false), 500);
+                    }
+                  }}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    activeStep === index
+                      ? "bg-primary-600 scale-125"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Go to step ${step.title}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Desktop Version */}
       <div
         ref={containerRef}
@@ -369,65 +508,6 @@ export function WorkProcess() {
               />
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* Mobile Version - Keep existing mobile version */}
-      <div className="md:hidden bg-white">
-        <div className="container mx-auto px-4 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">
-              How we work
-            </h2>
-            <p className="text-gray-600 leading-relaxed">
-              We follow a proven process to deliver exceptional results for your
-              business.
-            </p>
-          </motion.div>
-
-          <div className="space-y-8">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-primary font-bold">{step.id}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {step.title}
-                  </h3>
-                </div>
-                <p className="text-gray-600 ml-14">{step.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-12 text-center"
-          >
-            <p className="text-gray-600 mb-6">Ready to start your project?</p>
-            <a
-              href="/contact"
-              className="inline-block px-6 py-3 bg-primary text-white rounded-lg font-medium bg-primary-600 transition-colors"
-            >
-              Get Started
-            </a>
-          </motion.div>
         </div>
       </div>
     </>
