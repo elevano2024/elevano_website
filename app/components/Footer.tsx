@@ -22,18 +22,15 @@ export function Footer() {
           <div className="mb-6 sm:mb-0">
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2 text-sm md:text-base text-gray-400">
-              <li className="hover:text-white transition-colors cursor-pointer">
-                Custom Software Development
-              </li>
-              <li className="hover:text-white transition-colors cursor-pointer">
-                Cloud Solutions
-              </li>
-              <li className="hover:text-white transition-colors cursor-pointer">
-                Digital Transformation
-              </li>
-              <li className="hover:text-white transition-colors cursor-pointer">
-                IT Consulting
-              </li>
+              <li>Web Development</li>
+              <li>Mobile Applications</li>
+              <li>Business Intelligence & Data Warehousing</li>
+              <li>Staff Augmentation</li>
+              <li>Security</li>
+              <li>Cloud Services</li>
+              <li>Internet of Things</li>
+              <li>AI & Automation</li>
+              <li>Product Engineering</li>
             </ul>
           </div>
 
