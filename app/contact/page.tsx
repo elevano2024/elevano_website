@@ -209,7 +209,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#4C42D9] hover:bg-[#3f37b3] text-white py-3 px-6 rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full bg-brand hover:bg-[#3f37b3] text-white py-3 px-6 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </button>

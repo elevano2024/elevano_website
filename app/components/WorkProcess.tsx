@@ -220,7 +220,7 @@ export function WorkProcess() {
   const [canScrollUp, setCanScrollUp] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const wheelHandlerRef = useRef<((e: WheelEvent) => void) | null>(null);
-  const currentStep = steps[activeStep];
+  const currentStep = steps[activeStep] || steps[0];
   const [visitedSteps, setVisitedSteps] = useState(new Set([0]));
 
   // Mobile-specific states
@@ -281,7 +281,7 @@ export function WorkProcess() {
       if (distance < 0) {
         // Swipe Up (moving finger up) - Go to next step
         if (activeStep < steps.length - 1) {
-          setActiveStep((prev) => prev + 1);
+          setActiveStep((prev) => Math.min(prev + 1, steps.length - 1));
           setMobileVisitedSteps(
             (prev) => new Set([...Array.from(prev), activeStep + 1])
           );
@@ -291,7 +291,7 @@ export function WorkProcess() {
       } else {
         // Swipe Down (moving finger down) - Go to previous step
         if (activeStep > 0) {
-          setActiveStep((prev) => prev - 1);
+          setActiveStep((prev) => Math.max(prev - 1, 0));
         } else {
           setMobileCanScrollUp(true);
         }
@@ -614,7 +614,7 @@ export function WorkProcess() {
                 }}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   activeStep === index
-                    ? "bg-primary-600 scale-125"
+                    ? "bg-brand scale-125"
                     : "bg-gray-300 hover:bg-gray-400"
                 }`}
                 aria-label={`Go to step ${step.title}`}

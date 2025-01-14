@@ -3,9 +3,9 @@ import { Footer } from "./components/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { Navbar } from "./components/Navbar";
 import { ParallaxBackground } from "./components/ParallaxBackground";
-import { ServicesNew } from "./components/ServicesNew";
+import { ProjectShowcase } from "./components/ProjectShowcase";
 import { ServicesSection } from "./components/ServicesSection";
-import StatsSection from "./components/StatsSection";
+import { TestimonialsSection } from "./components/TestimonialsSection";
 import { WorkProcess } from "./components/WorkProcess";
 
 export default function Home() {
@@ -15,10 +15,10 @@ export default function Home() {
       <main>
         <HeroSection />
         <ParallaxBackground />
-        <ServicesNew />
-        <ServicesSection />
         <AboutSection />
-        <StatsSection />
+        <ServicesSection />
+        <TestimonialsSection />
+        <ProjectShowcase />
         <WorkProcess />
       </main>
       <Footer />

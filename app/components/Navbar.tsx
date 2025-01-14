@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function Navbar() {
@@ -10,6 +10,7 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
+  const router = useRouter();
 
   const backgroundColor = useTransform(
     scrollY,
@@ -39,13 +40,59 @@ export function Navbar() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "Services", href: "/#services" },
-    // { name: "Portfolio", href: "/portfolio" },
     { name: "About", href: "/#about" },
+    { name: "Services", href: "/#services" },
+    { name: "Portfolio", href: "/#portfolio" },
     { name: "Contact", href: "/contact" },
   ];
 
   const shouldBeTransparent = pathname === "/" && !isScrolled;
+
+  const handleNavClick = async (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href.includes("#")) {
+      e.preventDefault();
+      const targetId = href.split("#")[1];
+
+      // If we're not on the home page, navigate there first
+      if (pathname !== "/") {
+        await router.push("/");
+        // Wait for a brief moment to ensure the page has loaded
+        setTimeout(() => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
+        }, 100);
+      } else {
+        // If we're already on the home page, just scroll
+        const element = document.getElementById(targetId);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }
+      // Close mobile menu if open
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <>
@@ -88,6 +135,7 @@ export function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className="relative group"
                   >
                     <motion.span
@@ -184,7 +232,7 @@ export function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className="block py-2 relative group"
               >
                 <span className="font-medium text-primary block text-lg">
@@ -196,7 +244,7 @@ export function Navbar() {
             <div className="pt-4">
               <Link
                 href="/contact"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, "/contact")}
                 className="block w-full"
               >
                 <button className="w-full px-5 py-2 rounded-lg border border-primary/30 text-primary hover:bg-primary/10 transition-all">
