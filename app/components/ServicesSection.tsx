@@ -268,57 +268,59 @@ export function ServicesSection() {
             {serviceCards.map((service, index) => (
               <motion.div
                 key={service.title}
-                initial={{
-                  opacity: 0,
-                  scale: 0.7,
-                  x: isDesktop ? service.translateX : 0,
-                  y: isDesktop ? service.translateY - 50 : 0,
-                  rotate: isDesktop ? service.rotation : 0,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: isDesktop ? service.translateY : 0,
-                  x: isDesktop ? service.translateX : 0,
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 25,
-                    mass: 1,
-                    delay: index * 0.1,
-                  },
-                }}
-                whileHover={{
-                  scale: 1.02,
-                  rotate: isDesktop ? service.rotation * -0.7 : 0,
-                  y: isDesktop ? service.translateY - 8 : -4,
-                  zIndex: 10,
-                  transition: {
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 15,
-                    mass: 0.5,
-                    duration: 0.2,
-                  },
-                }}
-                className={`group rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 
-                  will-change-transform
-                  ${
-                    isDesktop
-                      ? `bg-gradient-to-br ${service.bgColor}`
-                      : "bg-white"
-                  }`}
-                style={{
-                  transformOrigin: "50% 0%",
-                  position: "relative",
-                  zIndex: index,
-                  transform: isDesktop
-                    ? `perspective(1000px) rotateZ(${service.rotation}deg)`
-                    : "none",
-                  backfaceVisibility: "hidden",
-                  WebkitFontSmoothing: "antialiased",
-                  WebkitTransformStyle: "preserve-3d",
-                }}
+                initial={
+                  isDesktop
+                    ? {
+                        opacity: 0,
+                        scale: 0.9,
+                        x: service.translateX,
+                        y: service.translateY,
+                        rotate: service.rotation,
+                      }
+                    : {
+                        opacity: 0,
+                        y: 20,
+                      }
+                }
+                whileInView={
+                  isDesktop
+                    ? {
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 15,
+                          mass: 0.5,
+                          delay: index * 0.1,
+                        },
+                      }
+                    : {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          duration: 0.3,
+                        },
+                      }
+                }
+                whileHover={
+                  isDesktop
+                    ? {
+                        scale: 1.03,
+                        zIndex: 10,
+                        transition: {
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 15,
+                          mass: 0.5,
+                          duration: 0.1,
+                        },
+                      }
+                    : undefined
+                }
+                className={`bg-white p-6 rounded-xl shadow-lg ${
+                  isDesktop ? "transform" : ""
+                }`}
               >
                 <div className="space-y-3 relative">
                   {/* Hide icon on mobile */}
