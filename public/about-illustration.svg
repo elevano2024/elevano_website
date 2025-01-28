@@ -1,0 +1,28 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- Connected Dots Background -->
+    <g fill="#E2E8F0">
+        <circle cx="100" cy="100" r="4" />
+        <circle cx="200" cy="150" r="4" />
+        <circle cx="300" cy="100" r="4" />
+        <circle cx="400" cy="200" r="4" />
+        <circle cx="500" cy="150" r="4" />
+    </g>
+
+    <!-- Connection Lines -->
+    <g stroke="#E2E8F0" stroke-width="2">
+        <line x1="100" y1="100" x2="200" y2="150" />
+        <line x1="200" y1="150" x2="300" y2="100" />
+        <line x1="300" y1="100" x2="400" y2="200" />
+        <line x1="400" y1="200" x2="500" y2="150" />
+    </g>
+
+    <!-- Central Element -->
+    <circle cx="400" cy="300" r="100" fill="#4F46E5" opacity="0.1" />
+    <circle cx="400" cy="300" r="80" fill="#4F46E5" opacity="0.2" />
+    <circle cx="400" cy="300" r="60" fill="#4F46E5" />
+
+    <!-- Decorative Elements -->
+    <rect x="200" y="400" width="120" height="80" rx="10" fill="#60A5FA" />
+    <circle cx="600" cy="350" r="50" fill="#34D399" />
+    <rect x="150" y="200" width="100" height="100" rx="10" fill="#F472B6" opacity="0.5" />
+</svg>
