@@ -5,45 +5,31 @@ import { useEffect, useState } from "react";
 const testimonials = [
   {
     quote:
-      "Elevano transformed our digital infrastructure completely. Their expertise in cloud solutions saved us both time and resources.",
-    author: "Sarah Johnson",
-    role: "CTO, TechCorp",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
+      "Elevano revolutionized our digital operations with their exceptional logbook application. Their expertise in cloud solutions not only streamlined our processes but also saved us valuable time and resources, enabling greater efficiency and productivity.",
+    author: "Jon Goodheart",
+    role: "CTO, Harbor Industrial",
+    image: "https://randomuser.me/api/portraits/men/5.jpg",
   },
   {
     quote:
-      "The team's dedication to delivering quality solutions is unmatched. They truly understand modern technology needs.",
-    author: "Michael Chen",
-    role: "CEO, InnovateTech",
-    image: "https://randomuser.me/api/portraits/men/2.jpg",
+      "The team provided invaluable support in developing an analytics-driven machine learning application. Their seamless integration process made onboarding new team members effortless, which significantly enhanced the capabilities of our algorithm detection software.",
+    author: "Roopak Patel",
+    role: "Director of Engineering, Western Digital ",
+    image: "https://randomuser.me/api/portraits/men/7.jpg",
   },
   {
     quote:
-      "Working with Elevano has been a game-changer for our business. Their IT consulting services are top-notch.",
-    author: "Emma Williams",
-    role: "Operations Director, FutureSoft",
-    image: "https://randomuser.me/api/portraits/women/3.jpg",
+      "Partnering with Elevano has been transformative for our business. Their IT consulting expertise enabled us to build a highly efficient eCommerce platform, streamlining our operations and driving growth.",
+    author: "Nick Tyler",
+    role: "Operations Director, Rebelsnow",
+    image: "https://randomuser.me/api/portraits/men/3.jpg",
   },
   {
     quote:
-      "Their AI integration capabilities helped us automate crucial processes. The ROI has been exceptional.",
+      "Elevano's integration of LLMs with LangChain and OpenAI's ChatGPT APIs enabled us to build an AI-driven chat and research application, revolutionizing how we analyze and leverage big data.",
     author: "David Martinez",
-    role: "Innovation Lead, AI Solutions",
+    role: "Innovation Lead,IntelliGenix ",
     image: "https://randomuser.me/api/portraits/men/4.jpg",
-  },
-  {
-    quote:
-      "The development team's attention to detail and commitment to quality is remarkable. They've exceeded our expectations.",
-    author: "Lisa Zhang",
-    role: "Product Manager, TechFlow",
-    image: "https://randomuser.me/api/portraits/women/5.jpg",
-  },
-  {
-    quote:
-      "Outstanding service and technical expertise. They've been instrumental in our digital transformation journey.",
-    author: "James Wilson",
-    role: "Digital Director, NextGen",
-    image: "https://randomuser.me/api/portraits/men/6.jpg",
   },
 ];
 
