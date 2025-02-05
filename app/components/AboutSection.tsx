@@ -24,7 +24,7 @@ export function AboutSection() {
             </p>
             <ul className="space-y-4">
               {[
-                "Over 10 years of industry experience",
+                "Over 40 years of industry experience",
                 "Certified technology experts",
                 "Proven track record of success",
                 "Client-focused approach",
