@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const testimonials = [
   {
     quote:
-      "Elevano revolutionized our digital operations with their exceptional logbook application for real time data tracking across the fleetgi. Their expertise in cloud solutions not only streamlined our processes but also saved us valuable time and resources, enabling greater efficiency and productivity.",
+      "Elevano revolutionized our digital operations with their exceptional logbook application for real time data tracking across our fleet. Their expertise in cloud solutions not only streamlined our processes but also saved us valuable time and resources, enabling greater efficiency and productivity.",
     author: "Jon Goodheart",
     role: "CTO, Harbor Industrial",
     image: "https://randomuser.me/api/portraits/men/5.jpg",
